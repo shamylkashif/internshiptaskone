@@ -1,7 +1,5 @@
-
-
+import 'package:internshiptaskone/screens/chat_list_screen.dart';
 import '../screens/authentication/login_screen.dart';
-import '../screens/search_users_screen.dart';
 import '../utils/app_imports.dart';
 import '../services/auth_service.dart';
 
@@ -17,7 +15,7 @@ class AuthController extends GetxController {
       loading.value = false;
       if (res['success']) {
         Get.snackbar("Success", "Logged in successfully");
-        Get.to(SearchUsersScreen());
+        Get.to(ChatListScreen());
       } else {
         Get.snackbar("Error", res['message']);
       }
