@@ -1,3 +1,5 @@
+import 'package:internshiptaskone/screens/authentication/login_screen.dart';
+
 import '../../controller/auth_controller.dart';
 import '../../utils/app_imports.dart';
 
@@ -19,6 +21,7 @@ class SignupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppConstants.backgroundColor,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -93,7 +96,7 @@ class SignupScreen extends StatelessWidget {
                       Text("Already have an account?", style: AppConstants.smallText),
                       TextButton(
                         onPressed: () {
-                          Get.back();
+                          Get.to(LoginScreen());
                         },
                         child: Text("Login", style: TextStyle(color: AppConstants.secondaryColor)),
                       ),

@@ -12,11 +12,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: "Social App",
-      theme: ThemeData(
-        primaryColor: AppConstants.primaryColor,
-        scaffoldBackgroundColor: AppConstants.backgroundColor,
-      ),
       home: LoginScreen(),
     );
   }

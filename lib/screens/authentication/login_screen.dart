@@ -1,3 +1,4 @@
+import 'package:internshiptaskone/screens/authentication/forgot_password.dart';
 import 'package:internshiptaskone/screens/authentication/signup_screen.dart';
 
 import '../../controller/auth_controller.dart';
@@ -75,6 +76,16 @@ class LoginScreen extends StatelessWidget {
                           child:
                           Text('Login', style: AppConstants.bodyText,)
                       ),
+                    ),
+                  ),
+                  SizedBox(height: 8,),
+                  GestureDetector(
+                    onTap: (){
+                      Get.to(ForgotPassword());
+                    },
+                    child: Align(
+                        alignment: Alignment.center,
+                        child: Text('Forgot Password', style: AppConstants.smallText,)
                     ),
                   ),
                   Row(
