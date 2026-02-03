@@ -1,6 +1,4 @@
-
 import 'package:http/http.dart' as http;
-
 import '../utils/app_imports.dart';
 import '../utils/api_endpoints.dart';
 
