@@ -1,5 +1,4 @@
 import 'package:internshiptaskone/screens/authentication/login_screen.dart';
-
 import 'utils/app_imports.dart';
 
 void main() {

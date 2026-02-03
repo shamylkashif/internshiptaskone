@@ -1,3 +1,6 @@
+import 'package:internshiptaskone/screens/edit_profile_screen.dart';
+
+import '../controller/auth_controller.dart';
 import '../models/user_model.dart';
 import '../utils/app_imports.dart';
 import '../controller/profile_controller.dart';
@@ -5,8 +8,8 @@ import '../controller/profile_controller.dart';
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({super.key});
 
-  final ProfileController controller =
-  Get.put(ProfileController());
+  final ProfileController controller = Get.put(ProfileController());
+  final AuthController authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -19,17 +22,20 @@ class ProfileScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
       ),
       body: Obx(() {
-        final user = controller.user.value;
+        final userValue = controller.user.value;
+        if (userValue == null) {
+          return const Center(child: CircularProgressIndicator());
+        }
 
         return SingleChildScrollView(
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-              _profileHeader(user),
+              _profileHeader(userValue),
               const SizedBox(height: 20),
-              _bioSection(user.bio),
+              _bioSection(userValue.bio),
               const SizedBox(height: 20),
-              _interestChips(user.interests),
+              _interestChips(userValue.interests),
               const SizedBox(height: 30),
               _statsRow(),
               const SizedBox(height: 30),
@@ -78,8 +84,7 @@ class ProfileScreen extends StatelessWidget {
           .map(
             (interest) => Chip(
           label: Text(interest),
-          backgroundColor:
-          AppConstants.primaryColor.withValues(alpha: 0.15),
+          backgroundColor:AppConstants.primaryColor.withValues(alpha: 0.15),
         ),
       )
           .toList(),
@@ -116,6 +121,7 @@ class ProfileScreen extends StatelessWidget {
               backgroundColor: AppConstants.primaryColor,
             ),
             onPressed: () {
+              Get.to(EditProfileScreen());
             },
             child: Text("Edit Profile", style: AppConstants.bodyText),
           ),
@@ -124,7 +130,7 @@ class ProfileScreen extends StatelessWidget {
         SizedBox(
           width: double.infinity,
           child: OutlinedButton(
-            onPressed: controller.logout,
+            onPressed: authController.logout,
             child: const Text("Logout"),
           ),
         ),

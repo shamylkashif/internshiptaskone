@@ -46,4 +46,25 @@ class UserModel {
       "createdAt": createdAt?.toIso8601String(),
     };
   }
+
+  UserModel copyWith({
+    String? id,
+    String? name,
+    String? email,
+    String? bio,
+    List<String>? interests,
+    String? fcmToken,
+    DateTime? createdAt,
+  }) {
+    return UserModel(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      email: email ?? this.email,
+      bio: bio ?? this.bio,
+      interests: interests ?? this.interests,
+      fcmToken: fcmToken ?? this.fcmToken,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
+
 }

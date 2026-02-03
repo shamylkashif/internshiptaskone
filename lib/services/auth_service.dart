@@ -19,7 +19,7 @@ class AuthService {
       );
 
       if (res.statusCode == 200) {
-        return {"success": true, "data": jsonDecode(res.body)};
+        return jsonDecode(res.body);
       } else {
         return {"success": false, "message": jsonDecode(res.body)["message"]};
       }
@@ -43,7 +43,7 @@ class AuthService {
       );
 
       if (res.statusCode == 201) {
-        return {"success": true, "data": jsonDecode(res.body)};
+        return jsonDecode(res.body);
       } else {
         return {"success": false, "message": jsonDecode(res.body)["message"]};
       }
