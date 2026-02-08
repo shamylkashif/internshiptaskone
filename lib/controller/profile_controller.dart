@@ -27,8 +27,6 @@ class ProfileController extends GetxController {
       user.value = profile;
       // Optional: sync with AuthController
       authController.currentUser.value = profile;
-    } catch (e) {
-      // fallback: use currentUser from AuthController
     } finally {
       loading.value = false;
     }

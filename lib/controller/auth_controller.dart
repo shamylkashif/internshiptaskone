@@ -1,8 +1,10 @@
+import 'package:internshiptaskone/controller/profile_controller.dart';
 import 'package:internshiptaskone/screens/main_navigation_screen.dart';
 import '../models/user_model.dart';
 import '../screens/authentication/login_screen.dart';
 import '../utils/app_imports.dart';
 import '../services/auth_service.dart';
+import 'edit_profile_controller.dart';
 
 class AuthController extends GetxController {
   Rx<UserModel?> currentUser = Rx<UserModel?>(null);
@@ -13,7 +15,12 @@ class AuthController extends GetxController {
   // Login function
   Future<void> login(String email, String password) async {
     loading.value = true;
+
+    token.value = "";
+    currentUser.value = null;
+
     try {
+
       final res = await AuthService.login(email, password);
       loading.value = false;
       if (res['success']) {
@@ -48,7 +55,12 @@ class AuthController extends GetxController {
     }
   }
   void logout() {
+    token.value = "";
     currentUser.value = null;
+
+    if (Get.isRegistered<ProfileController>()) Get.delete<ProfileController>();
+    if (Get.isRegistered<EditProfileController>()) Get.delete<EditProfileController>();
+
     Get.offAll(LoginScreen());
   }
 }

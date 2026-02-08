@@ -1,11 +1,13 @@
+
+import 'package:internshiptaskone/controller/profile_controller.dart';
+
 import '../utils/app_imports.dart';
 import '../controller/edit_profile_controller.dart';
 
 class EditProfileScreen extends StatelessWidget {
-  EditProfileScreen({super.key});
+  EditProfileScreen({super.key, required ProfileController profileController});
 
-  final EditProfileController controller =
-  Get.put(EditProfileController());
+  final EditProfileController controller = Get.put(EditProfileController());
 
   @override
   Widget build(BuildContext context) {

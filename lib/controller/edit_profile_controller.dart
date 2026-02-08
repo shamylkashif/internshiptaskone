@@ -5,6 +5,8 @@ import '../utils/app_imports.dart';
 
 class EditProfileController extends GetxController {
   final AuthController authController = Get.find<AuthController>();
+  final ProfileController profileController = Get.find<ProfileController>();
+
 
   late TextEditingController nameC;
   late TextEditingController bioC;
@@ -37,10 +39,6 @@ class EditProfileController extends GetxController {
   }
 
   void saveProfile() {
-
-    final ProfileController profileController =
-    Get.find<ProfileController>();
-
     profileController.updateProfile(
       nameC.text.trim(),
       bioC.text.trim(),

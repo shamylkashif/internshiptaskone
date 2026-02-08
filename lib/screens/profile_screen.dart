@@ -121,7 +121,9 @@ class ProfileScreen extends StatelessWidget {
               backgroundColor: AppConstants.primaryColor,
             ),
             onPressed: () {
-              Get.to(EditProfileScreen());
+              final profileController = Get.find<ProfileController>();
+              Get.to(() => EditProfileScreen(profileController: profileController));
+              //Get.to(() => EditProfileScreen());
             },
             child: Text("Edit Profile", style: AppConstants.bodyText),
           ),
