@@ -1,11 +1,11 @@
 import 'package:internshiptaskone/controller/profile_controller.dart';
-
 import '../controller/auth_controller.dart';
 import '../utils/app_imports.dart';
 
 class EditProfileController extends GetxController {
   final AuthController authController = Get.find<AuthController>();
   final ProfileController profileController = Get.find<ProfileController>();
+
 
 
   late TextEditingController nameC;
@@ -45,5 +45,8 @@ class EditProfileController extends GetxController {
       interests,
     );
   }
+
+
+
 
 }
