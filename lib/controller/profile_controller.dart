@@ -1,11 +1,13 @@
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 import '../models/user_model.dart';
 import '../services/user_service.dart';
 import 'package:internshiptaskone/utils/app_imports.dart';
-
 import 'auth_controller.dart';
 
 class ProfileController extends GetxController {
   final AuthController authController = Get.find<AuthController>();
+  Rx<File?> selectedImage = Rx<File?>(null);
 
   // Reactive local user
   var user = Rxn<UserModel>();
@@ -47,6 +49,14 @@ class ProfileController extends GetxController {
     } finally {
       loading.value = false;
       Get.back();
+    }
+  }
+
+  Future<void> pickImage() async {
+    final picker = ImagePicker();
+    final picked = await picker.pickImage(source: ImageSource.gallery);
+    if (picked != null) {
+      selectedImage.value = File(picked.path);
     }
   }
 }

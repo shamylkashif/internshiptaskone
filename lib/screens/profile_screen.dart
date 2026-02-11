@@ -50,12 +50,21 @@ class ProfileScreen extends StatelessWidget {
   Widget _profileHeader(UserModel user) {
     return Column(
       children: [
-        CircleAvatar(
-          radius: 50,
-          backgroundColor:
-          AppConstants.primaryColor.withValues(alpha: 0.1),
-          child: const Icon(Icons.person, size: 50),
-        ),
+        Obx( () {
+         return GestureDetector(
+           onTap: () => controller.pickImage(),
+           child: CircleAvatar(
+              radius: 50,
+               backgroundColor: AppConstants.primaryColor.withValues(alpha: 0.1),
+               backgroundImage: controller.selectedImage.value != null
+                   ? FileImage(controller.selectedImage.value!)
+                   : null, // fallback to icon if no image
+               child: controller.selectedImage.value == null
+                   ? const Icon(Icons.person, size: 50)
+                   : null
+           ),
+         );
+        }),
         const SizedBox(height: 10),
         Text(user.name ?? "", style: AppConstants.heading1),
         const SizedBox(height: 5),
