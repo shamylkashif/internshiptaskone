@@ -2,6 +2,7 @@ class UserModel {
   String? id;
   String? name;
   String? email;
+  String? profileImage;
   String? bio;
   List<String>? interests;
   String? fcmToken;
@@ -11,6 +12,7 @@ class UserModel {
     this.id,
     this.name,
     this.email,
+    this.profileImage,
     this.bio,
     this.interests,
     this.fcmToken,
@@ -23,6 +25,7 @@ class UserModel {
       id: json["_id"],
       name: json["name"],
       email: json["email"],
+      profileImage: json["profileImage"],
       bio: json["bio"],
       interests: json["interests"] != null
           ? List<String>.from(json["interests"])
@@ -40,6 +43,7 @@ class UserModel {
       "_id": id,
       "name": name,
       "email": email,
+      "profileImage": profileImage,
       "bio": bio,
       "interests": interests,
       "fcmToken": fcmToken,
@@ -51,6 +55,7 @@ class UserModel {
     String? id,
     String? name,
     String? email,
+    String? profileImage,
     String? bio,
     List<String>? interests,
     String? fcmToken,
@@ -60,6 +65,7 @@ class UserModel {
       id: id ?? this.id,
       name: name ?? this.name,
       email: email ?? this.email,
+      profileImage: profileImage ?? this.profileImage ,
       bio: bio ?? this.bio,
       interests: interests ?? this.interests,
       fcmToken: fcmToken ?? this.fcmToken,
