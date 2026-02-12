@@ -1,5 +1,4 @@
 import 'package:internshiptaskone/screens/edit_profile_screen.dart';
-
 import '../controller/auth_controller.dart';
 import '../models/user_model.dart';
 import '../utils/app_imports.dart';

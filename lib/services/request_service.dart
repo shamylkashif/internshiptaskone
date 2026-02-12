@@ -40,10 +40,11 @@ class RequestService {
   }
 
 
-  /// Respond to a request (accept/reject)
+  /// Respond to a request (accept / block)
   static Future<void> respondRequest(String token, String requestId, String action) async {
+    final url = Uri.parse("${ApiEndpoints.baseUrl}/api/requests/respond");
     final res = await http.post(
-      Uri.parse("${ApiEndpoints.baseUrl}/api/requests/respond"),
+      url,
       headers: {
         "Authorization": "Bearer $token",
         "Content-Type": "application/json",
@@ -52,22 +53,65 @@ class RequestService {
     );
 
     if (res.statusCode != 200) {
-      throw Exception(jsonDecode(res.body)["message"] ?? "Failed to respond to request");
+      try {
+        final data = jsonDecode(res.body);
+        throw Exception(data["message"] ?? "Failed to respond to request");
+      } catch (_) {
+        throw Exception("Failed to respond to request: ${res.body}");
+      }
     }
   }
 
-  /// Get all pending requests for the logged-in user
+  /// Get pending requests
   static Future<List<RequestModel>> getPendingRequests(String token) async {
+    final url = Uri.parse("${ApiEndpoints.baseUrl}/api/requests/pending");
     final res = await http.get(
-      Uri.parse("${ApiEndpoints.baseUrl}/api/requests/pending"),
-      headers: {"Authorization": "Bearer $token"},
+      url,
+      headers: {
+        "Authorization": "Bearer $token",
+        "Content-Type": "application/json",
+      },
+    );
+    print("PendingRequests status: ${res.statusCode}");
+    print("PendingRequests body: ${res.body}");
+
+    if (res.statusCode == 200) {
+      final data = jsonDecode(res.body);
+      if (data["requests"] is List) {
+        return (data["requests"] as List)
+            .map((e) => RequestModel.fromJson(e))
+            .toList();
+      } else {
+        return [];
+      }
+    } else {
+      throw Exception("Failed to fetch pending requests: ${res.body}");
+    }
+  }
+
+  /// Get connections
+  static Future<List<RequestModel>> getConnections(String token) async {
+    final url = Uri.parse("${ApiEndpoints.baseUrl}/api/requests/connections");
+    final res = await http.get(
+      url,
+      headers: {
+        "Authorization": "Bearer $token",
+        "Content-Type": "application/json",
+      },
     );
 
     if (res.statusCode == 200) {
-      final data = jsonDecode(res.body)["requests"] as List;
-      return data.map((json) => RequestModel.fromJson(json)).toList();
+      final data = jsonDecode(res.body);
+      if (data["connections"] is List) {
+        return (data["connections"] as List)
+            .map((e) => RequestModel.fromJson(e))
+            .toList();
+      } else {
+        return [];
+      }
     } else {
-      throw Exception("Failed to fetch pending requests");
+      throw Exception("Failed to fetch connections: ${res.body}");
     }
   }
+
 }

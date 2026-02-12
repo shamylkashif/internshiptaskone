@@ -27,6 +27,7 @@ class AuthController extends GetxController {
         token.value = res["token"];
         currentUser.value = UserModel.fromJson(res["user"]);
         Get.to(MainNavigationScreen());
+        print("Token: ${token.value}");
       } else {
         Get.snackbar("Error", res['message']);
       }

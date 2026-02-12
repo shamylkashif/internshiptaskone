@@ -1,5 +1,6 @@
 import 'package:internshiptaskone/screens/chat_list_screen.dart';
 import 'package:internshiptaskone/screens/profile_screen.dart';
+import 'package:internshiptaskone/screens/request_main_screen.dart';
 import 'package:internshiptaskone/screens/search_users_screen.dart';
 import 'package:internshiptaskone/notification/notifications.dart';
 import 'package:internshiptaskone/utils/app_imports.dart';
@@ -12,6 +13,7 @@ class MainNavigationScreen extends StatelessWidget {
   final List<Widget> pages = [
     SearchUsersScreen(),
     ChatListScreen(),
+    RequestsMainScreen(),
     Notifications(),
     ProfileScreen(),
   ];
@@ -39,6 +41,10 @@ class MainNavigationScreen extends StatelessWidget {
           BottomNavigationBarItem(
             icon: Icon(Icons.chat),
             label: "Chats",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_add_alt),
+            label: "Requests",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.notifications),

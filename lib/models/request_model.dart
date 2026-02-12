@@ -7,6 +7,7 @@ class RequestModel {
   String? status;
   DateTime? createdAt;
 
+
   RequestModel({
     this.id,
     this.fromUser,
@@ -22,6 +23,7 @@ class RequestModel {
       toUser: json["toUser"] != null ? UserModel.fromJson(json["toUser"]) : null,
       status: json["status"],
       createdAt: json["createdAt"] != null ? DateTime.parse(json["createdAt"]) : null,
+
     );
   }
 
@@ -32,6 +34,8 @@ class RequestModel {
       "toUser": toUser?.toJson(),
       "status": status,
       "createdAt": createdAt?.toIso8601String(),
+
     };
   }
 }
+
