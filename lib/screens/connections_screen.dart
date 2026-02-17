@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:internshiptaskone/screens/chat_screen.dart';
 import '../controller/auth_controller.dart';
 import '../controller/request_controller.dart';
 
@@ -59,10 +60,17 @@ class ConnectionsScreen extends StatelessWidget {
               subtitle: const Text("Connected"),
 
               onTap: () {
-                /// Navigate to chat screen later
-                print("Open chat with ${connectionUser?.name}");
-              },
-            ),
+                if (connectionUser != null && connectionUser.id != null) {
+                  Get.to(
+                    ChatScreen(
+                      otherUserId: connectionUser.id!,
+                      otherUserName: connectionUser.name ?? "Unknown",
+                      otherUserImage: connectionUser.profileImage ??
+                          "", // if you have an image field
+                    ),
+                  );
+                }
+              }),
           );
         },
       );

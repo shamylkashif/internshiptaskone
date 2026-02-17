@@ -2,19 +2,24 @@ import '../controller/request_controller.dart';
 import '../models/user_model.dart';
 import '../utils/app_imports.dart';
 
+
 class OtherUserProfileScreen extends StatelessWidget {
   final UserModel user;
+  final RequestController requestController = Get.find<RequestController>();
+
 
   OtherUserProfileScreen({super.key, required this.user});
-  final RequestController requestController = Get.put(RequestController());
 
   @override
   Widget build(BuildContext context) {
+    // Ensure relationship status is updated whenever screen opens
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      requestController.updateRelationship(user.id!);
+    });
+
     return Scaffold(
       backgroundColor: AppConstants.backgroundColor,
-      appBar: AppBar(
-        automaticallyImplyLeading: true,
-      ),
+      appBar: AppBar(automaticallyImplyLeading: true),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -35,14 +40,12 @@ class OtherUserProfileScreen extends StatelessWidget {
   }
 
   // ---------------- PROFILE HEADER ----------------
-
   Widget _profileHeader(UserModel user) {
     return Column(
       children: [
         CircleAvatar(
           radius: 50,
-          backgroundColor:
-          AppConstants.primaryColor.withValues(alpha: 0.1),
+          backgroundColor: AppConstants.primaryColor.withValues(alpha: 0.1),
           child: const Icon(Icons.person, size: 50),
         ),
         const SizedBox(height: 10),
@@ -54,7 +57,6 @@ class OtherUserProfileScreen extends StatelessWidget {
   }
 
   // ---------------- BIO ----------------
-
   Widget _bioSection(String? bio) {
     return Text(
       bio ?? "",
@@ -64,11 +66,8 @@ class OtherUserProfileScreen extends StatelessWidget {
   }
 
   // ---------------- INTEREST CHIPS ----------------
-
   Widget _interestChips(List<String>? interests) {
-    if (interests == null || interests.isEmpty) {
-      return const SizedBox();
-    }
+    if (interests == null || interests.isEmpty) return const SizedBox();
 
     return Wrap(
       spacing: 8,
@@ -86,8 +85,6 @@ class OtherUserProfileScreen extends StatelessWidget {
   }
 
   // ---------------- STATS ----------------
-  // (You can connect these later with Firestore)
-
   Widget _statsRow() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -109,23 +106,83 @@ class OtherUserProfileScreen extends StatelessWidget {
   }
 
   // ---------------- ACTION BUTTON ----------------
-
   Widget _actionButtons() {
-    return SizedBox(
-      width: double.infinity,
-      child: Obx((){
-        return   ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppConstants.primaryColor,
+    return Obx(() {
+      final status = requestController.relationshipStatus.value;
+      final isSender = requestController.isSender.value;
+
+      // No relationship yet → show "Send Request"
+      if (status == "none") {
+        return SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            onPressed: () => requestController.sendRequest(user.id!),
+            child: const Text("Send Request"),
           ),
-          onPressed: requestController.loading.value
-              ? null
-              : () => requestController.sendRequest(user.id!),
-          child: requestController.loading.value
-              ? const CircularProgressIndicator(color: Colors.white)
-              : const Text("Send Request", style: AppConstants.bodyText,),
         );
-      })
-    );
+      }
+
+      // Pending request
+      if (status == "pending") {
+        // Sender sees "Pending"
+        if (isSender) {
+          return SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: null,
+              child: const Text("Pending"),
+            ),
+          );
+        }
+        // Receiver sees "Accept / Reject"
+        else {
+          return Row(
+            children: [
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: () =>
+                      requestController.respondRequest("accepted"),
+                  child: const Text("Accept"),
+                ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: () =>
+                      requestController.respondRequest("blocked"),
+                  child: const Text("Reject"),
+                ),
+              ),
+            ],
+          );
+        }
+      }
+
+      // Accepted → show Chat
+      if (status == "accepted") {
+        return SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            onPressed: () {
+              // Navigate to chat screen
+            },
+            child: const Text("Chat"),
+          ),
+        );
+      }
+
+      // Blocked
+      if (status == "blocked") {
+        return SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            onPressed: null,
+            child: const Text("Blocked"),
+          ),
+        );
+      }
+
+      return const SizedBox();
+    });
   }
 }

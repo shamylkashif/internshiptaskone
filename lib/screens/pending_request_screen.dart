@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:internshiptaskone/screens/other_user_profile_screen.dart';
 import '../controller/request_controller.dart';
 import '../services/request_service.dart';
 
@@ -34,6 +35,9 @@ class PendingRequestScreen extends StatelessWidget {
               vertical: 6,
             ),
             child: ListTile(
+              onTap: (){
+                Get.to(OtherUserProfileScreen(user: sender!));
+              },
               leading: CircleAvatar(
                 child: Text(
                   sender?.name?.substring(0, 1).toUpperCase() ?? "?",
