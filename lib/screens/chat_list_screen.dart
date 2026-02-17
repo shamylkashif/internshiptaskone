@@ -1,71 +1,73 @@
-import 'package:internshiptaskone/screens/chat_screen.dart';
-import 'package:internshiptaskone/utils/app_imports.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../controller/chat_controller.dart';
+import 'chat_screen.dart';
 
 class ChatListScreen extends StatelessWidget {
-  ChatListScreen({super.key});
+  final ChatController chatController = Get.put(ChatController());
 
-  final ChatController controller = Get.put(ChatController());
+  ChatListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppConstants.backgroundColor,
-      appBar: AppBar(
-        backgroundColor: AppConstants.backgroundColor,
-        title: const Text('Chats'),
-        centerTitle: true,
-      ),
+    chatController.listenChatList();
 
+    return Scaffold(
+      appBar: AppBar(
+          title: const Text("Chats"),
+          automaticallyImplyLeading: false,
+          centerTitle: true,
+      ),
       body: Obx(() {
-        if (controller.chats.isEmpty) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.chat_bubble_outline,
-                    size: 80, color: Colors.grey),
-                const SizedBox(height: 15),
-                Text(
-                  "No chat found",
-                  style: AppConstants.heading2.copyWith(color: Colors.grey),
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  "Connect with other users",
-                  style: AppConstants.smallText,
-                ),
-              ],
-            ),
-          );
+        final chats = chatController.chatList;
+
+        if (chats.isEmpty) {
+          return const Center(child: Text("No chats yet"));
         }
 
-        return ListView.separated(
-          itemCount: controller.chats.length,
-          separatorBuilder: (_, __) => Divider(
-            thickness: 1,
-            indent: 20,
-            endIndent: 20,
-            color: Colors.grey[300],
-          ),
+        return ListView.builder(
+          itemCount: chats.length,
           itemBuilder: (context, index) {
-            final chat = controller.chats[index];
+            final chat = chats[index].data();
+            final participants = chat['participants'] as List<dynamic>;
+            final otherUserId = participants.firstWhere(
+                  (id) => id != chatController.currentUserId,
+              orElse: () => null,
+            );
+
+            if (otherUserId == null) return const SizedBox();
+
+            final userNames = chat['userNames'] as Map<String, dynamic>;
+            final userImages = chat['userImages'] as Map<String, dynamic>;
+            final lastMessage = chat['lastMessage'] ?? "";
+
+            final otherUserName = userNames[otherUserId] ?? "Unknown";
+            final otherUserImage = userImages[otherUserId] ?? "";
+
             return ListTile(
               leading: CircleAvatar(
-                child: Text(chat.name[0]),
+                backgroundImage: otherUserImage.isNotEmpty
+                    ? NetworkImage(otherUserImage)
+                    : null,
+                child: otherUserImage.isEmpty ? const Icon(Icons.person) : null,
               ),
-              title: Text(chat.name),
-              subtitle: Text(chat.lastMessage),
-              trailing: Text(chat.time),
+              title: Text(otherUserName),
+              subtitle: Text(
+                lastMessage,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
               onTap: () {
-                Get.to(() => ChatScreen());
+                Get.to(() => ChatScreen(
+                  otherUserId: otherUserId,
+                  otherUserName: otherUserName,
+                  otherUserImage: otherUserImage,
+                ));
               },
             );
           },
         );
       }),
-
     );
   }
-
 }
