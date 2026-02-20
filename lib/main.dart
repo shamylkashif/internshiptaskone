@@ -1,11 +1,13 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:internshiptaskone/firebase_options.dart';
 import 'package:internshiptaskone/screens/authentication/login_screen.dart';
 import 'utils/app_imports.dart';
+import 'package:pusher_beams/pusher_beams.dart';
 
-void main() {
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await PusherBeams.instance.start("e58938f3-11da-4bd0-bddd-5ff896d9d9b2");
+  await PusherBeams.instance.addDeviceInterest("hello");
   runApp(const MyApp());
-  _initializeFirebase();
 }
 
 class MyApp extends StatelessWidget {
@@ -17,8 +19,4 @@ class MyApp extends StatelessWidget {
       home: LoginScreen(),
     );
   }
-}
-
-_initializeFirebase() async {
- await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 }

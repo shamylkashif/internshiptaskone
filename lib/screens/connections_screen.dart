@@ -62,12 +62,7 @@ class ConnectionsScreen extends StatelessWidget {
               onTap: () {
                 if (connectionUser != null && connectionUser.id != null) {
                   Get.to(
-                    ChatScreen(
-                      otherUserId: connectionUser.id!,
-                      otherUserName: connectionUser.name ?? "Unknown",
-                      otherUserImage: connectionUser.profileImage ??
-                          "", // if you have an image field
-                    ),
+                    ChatScreen(),
                   );
                 }
               }),
