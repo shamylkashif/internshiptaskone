@@ -1,7 +1,6 @@
-# Internship Task One – Flutter Chat & Social App
+Internship Task One – Flutter Chat & Social App
 A Flutter application for learning purposes, featuring user authentication, profiles, connections, real-time chat, and push notifications. Built using Flutter, Firebase, GetX, and Pusher Beams.
-
-**📂 Project Structure**
+📂 Project Structure
 lib/
 ├─ controller/                # GetX controllers for state management
 │  ├ auth_controller.dart
@@ -46,19 +45,84 @@ lib/
 │  └ validators.dart
 ├─ firebase_options.dart       # Firebase configuration
 └─ main.dart                   # Entry point
+🚀 Features
+•	User Authentication
+o	Sign up, login, and forgot password.
+o	Firebase Authentication integration.
+•	Profile Management
+o	View and edit your profile.
+o	Other user profile viewing.
+•	Connections / Requests
+o	Send, accept, and view pending connection requests.
+o	Display list of connections.
+•	Real-time Chat
+o	One-to-one chat using Firebase Firestore.
+o	Messages are updated in real-time.
+o	Push notifications for new messages.
+•	Search Users
+o	Search for users by name/email.
+o	Send connection requests.
+•	Notifications
+o	Pusher Beams integration for push notifications.
+🛠 Tech Stack
+•	Flutter – Frontend framework
+•	Backend – Node.js
+•	Database – MongoDB
+•	Firebase – Firestore for chat
+•	GetX – State management & routing
+•	Pusher Beams – Push notifications
+•	Dart – Programming language
+⚙ Installation & Setup
+1.	Clone the repo
+                       git clone https://github.com/shamylkashif/internshiptaskone.git
+                       cd internshiptaskone
+2.	Install dependencies
+                       flutter pub get
+3.	Firebase setup
+o	Add your google-services.json (Android) and GoogleService-Info.plist (iOS) in the respective folders.
+o	Make sure firebase_options.dart is configured.
+4.	Run the app
+                      flutter run
+🔗 Usage
+1.	Launch the app.
+2.	Sign up or login with an existing account.
+3.	Browse users and send connection requests.
+4.	Accept requests and start real-time chatting.
+5.	Edit your profile or view other users’ profiles.
+6.	Receive push notifications for new messages.
+⚡ Notes & Tips
+•	Firestore queries may require composite indexes. If you get an error like “The query requires an index”, follow the Firebase console link.
+•	Push notifications require Pusher Beams instanceId configured in your app.
+•	If using an emulator, make sure Google Play Services is available for notifications.
+•	Avoid heavy work on the main thread to prevent frame skips (“Skipped frames” warnings).
+📖 Future Improvements
+•	Group chats with multiple participants.
+•	Media messages (images, videos).
+•	Dark mode support.
+•	Advanced search filters.
+📝 References
+•	Flutter Documentation
+•	GetX Documentation
+•	Firebase Flutter Docs
+•	Pusher Beams Docs
+👨‍💻 Author
+Shamyl Kashif
+•	BSCS, Flutter Developer
+•	LinkedIn | Email | Website
+📬 Contact
+If you'd like to learn more or collaborate on Flutter-based apps, feel free to reach out.
 
 
-**🚀 Features**
 
-**User Authentication:** Sign up, login, and reset password using Firebase Auth.
 
-**Profile Management:** Edit your profile; view other users’ profiles.
 
-**Connections / Requests:** Send, accept, and view pending requests.
 
-**Real-time Chat:** Chat one-to-one with Firestore real-time updates.
 
-**Push Notifications:** Pusher Beams integration for new messages.
 
-**Search Users:** Find users by name or email and send connection requests.
+
+
+
+
+
+
 
