@@ -1,8 +1,8 @@
-# internshiptaskone
+# Internship Task One – Flutter Chat & Social App
+A Flutter application for learning purposes, featuring user authentication, profiles, connections, real-time chat, and push notifications. Built using Flutter, Firebase, GetX, and Pusher Beams.
 
-A new Flutter project.
+**📂 Project Structure**
 
-## Getting Started
 
 This project is a starting point for a Flutter application.
 
