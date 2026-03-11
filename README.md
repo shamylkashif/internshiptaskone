@@ -49,7 +49,9 @@ lib/
 
 
 **🚀 Features**
+
 **User Authentication:** Sign up, login, and reset password using Firebase Auth.
+
 **Profile Management:** Edit your profile; view other users’ profiles.
 **Connections / Requests:** Send, accept, and view pending requests.
 **Real-time Chat:** Chat one-to-one with Firestore real-time updates.
