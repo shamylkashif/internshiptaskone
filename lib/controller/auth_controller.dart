@@ -1,5 +1,6 @@
 import 'package:internshiptaskone/controller/profile_controller.dart';
 import 'package:internshiptaskone/screens/main_navigation_screen.dart';
+import 'package:pusher_beams/pusher_beams.dart';
 import '../models/user_model.dart';
 import '../screens/authentication/login_screen.dart';
 import '../utils/app_imports.dart';
@@ -26,6 +27,11 @@ class AuthController extends GetxController {
       if (res['success']) {
         token.value = res["token"];
         currentUser.value = UserModel.fromJson(res["user"]);
+        // two new lines
+        final userId = currentUser.value!.id;
+        await PusherBeams.instance.setDeviceInterests([
+          "user-$userId"
+        ]);
         Get.to(MainNavigationScreen());
         print("Token: ${token.value}");
       } else {
